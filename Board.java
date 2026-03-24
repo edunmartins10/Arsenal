@@ -1,4 +1,4 @@
-package board;
+package board; 
 
 import pieces.*;
 import utils.Position;
