@@ -1,5 +1,5 @@
 package utils;
-
+ 
 /**
  * Represents a position on the chess board.
  * Stores row and column values.
