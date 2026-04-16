@@ -71,3 +71,4 @@ public class MoveRecord {
         return color + " " + piece.getPieceName() + ": " + from + " → " + to + cap;
     }
 }
+
