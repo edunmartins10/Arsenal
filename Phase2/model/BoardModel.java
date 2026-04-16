@@ -107,3 +107,4 @@ public class BoardModel {
             piece.setPosition(new Position(row, col));
     }
 }
+
