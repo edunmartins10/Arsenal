@@ -174,3 +174,4 @@ public class HistoryPanel extends JPanel {
         capturedLabel.setText(sb.toString());
     }
 }
+
