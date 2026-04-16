@@ -1,8 +1,5 @@
 package game;
 
-import board.Board;
-import utils.Position;
-
 import java.util.Scanner;
 
 /**
@@ -10,93 +7,68 @@ import java.util.Scanner;
  */
 public class Game {
 
-    private Board board;
-    private Player whitePlayer;
-    private Player blackPlayer;
-    private Player currentPlayer;
-    private Scanner scanner;
+    private char[][] board;
 
     /**
-     * Creates a new game.
+     * Creates a new game and initializes the board.
      */
     public Game() {
-        board = new Board();
-        whitePlayer = new Player("white");
-        blackPlayer = new Player("black");
-        currentPlayer = whitePlayer;
-        scanner = new Scanner(System.in);
+        board = new char[8][8];
+        initializeBoard();
     }
 
     /**
-     * Starts the game loop.
+     * Sets up a simple board for demonstration.
      */
-    public void play() {
-        boolean running = true;
-
-        while (running) {
-            board.display();
-            System.out.println();
-            System.out.println(currentPlayer.getColor() + "'s turn");
-            System.out.print("Enter move (example: E2 E4) or type quit: ");
-
-            String input = scanner.nextLine().trim();
-
-            if (input.equalsIgnoreCase("quit")) {
-                running = false;
-            } else if (isValidMoveFormat(input)) {
-                String[] parts = input.split(" ");
-                Position from = parsePosition(parts[0]);
-                Position to = parsePosition(parts[1]);
-
-                if (from != null && to != null) {
-                    board.movePiece(from, to);
-                    switchTurn();
-                } else {
-                    System.out.println("Invalid board position. Try again.");
-                }
-            } else {
-                System.out.println("Invalid move format. Use format like E2 E4.");
+    private void initializeBoard() {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                board[row][col] = '.';
             }
-
-            System.out.println();
         }
 
-        System.out.println("Game ended.");
+        board[1][0] = 'P';
+        board[6][0] = 'p';
+    }
+
+    /**
+     * Runs the game loop.
+     */
+    public void play() {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            printBoard();
+
+            System.out.print("Enter move (row1 col1 row2 col2) or -1 to quit: ");
+            int r1 = scanner.nextInt();
+
+            if (r1 == -1) {
+                break;
+            }
+
+            int c1 = scanner.nextInt();
+            int r2 = scanner.nextInt();
+            int c2 = scanner.nextInt();
+
+            board[r2][c2] = board[r1][c1];
+            board[r1][c1] = '.';
+        }
+
         scanner.close();
     }
 
     /**
-     * Checks whether the move format is correct.
+     * Prints the board in the console.
      */
-    private boolean isValidMoveFormat(String input) {
-        return input.matches("^[A-Ha-h][1-8] [A-Ha-h][1-8]$");
-    }
-
-    /**
-     * Converts chess notation like E2 into a Position object.
-     */
-    private Position parsePosition(String chessPosition) {
-        chessPosition = chessPosition.toUpperCase();
-
-        int column = chessPosition.charAt(0) - 'A';
-        int rank = chessPosition.charAt(1) - '0';
-        int row = 8 - rank;
-
-        if (utils.Utils.isValidCoordinate(row, column)) {
-            return new Position(row, column);
+    private void printBoard() {
+        System.out.println("Chessboard:");
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                System.out.print(board[row][col] + " ");
+            }
+            System.out.println();
         }
-
-        return null;
-    }
-
-    /**
-     * Switches turns between white and black.
-     */
-    private void switchTurn() {
-        if (currentPlayer == whitePlayer) {
-            currentPlayer = blackPlayer;
-        } else {
-            currentPlayer = whitePlayer;
-        }
+        System.out.println();
     }
 }
