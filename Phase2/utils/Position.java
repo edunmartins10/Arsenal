@@ -84,3 +84,4 @@ public class Position {
         return 8 * row + col;
     }
 }
+
