@@ -275,3 +275,4 @@ public class MoveValidator {
         return isCheckmate(board, color);
     }
 }
+
