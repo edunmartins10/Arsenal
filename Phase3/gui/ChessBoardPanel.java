@@ -436,3 +436,4 @@ public class ChessBoardPanel extends JPanel {
         return row >= 0 && row < 8 && col >= 0 && col < 8;
     }
 }
+
