@@ -40,3 +40,4 @@ public class Pawn extends Piece {
     }
 }
 
+ Phase3/pieces/Rook.java Phase3/pieces/Knight.java Phase3/pieces/Bishop.java Phase3/pieces/Queen.java Phase3/pieces/King.java
