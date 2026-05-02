@@ -1,6 +1,7 @@
 package gui;
 
 import model.BoardModel;
+import model.MoveValidator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -207,19 +208,27 @@ public class ChessFrame extends JFrame {
     }
 
     /**
-     * Updates the turn label display.
+     * Updates the turn label display, including check warning if applicable.
      *
      * @param turn "white" or "black"
      */
     public void updateTurnLabel(String turn) {
+        boolean inCheck = MoveValidator.isKingInCheck(boardModel, turn);
         String display = turn.substring(0,1).toUpperCase() + turn.substring(1) + "'s Turn";
         if (boardPanel.isAIMode() && turn.equals("black"))
             display = "AI is thinking...";
+        if (inCheck)
+            display += "  ⚠ CHECK!";
         turnLabel.setText(display);
-        turnLabel.setBackground(turn.equals("white")
-            ? new Color(200, 200, 200) : new Color(50, 50, 50));
-        turnLabel.setForeground(turn.equals("white") ? Color.BLACK : Color.WHITE);
+        turnLabel.setBackground(inCheck
+            ? new Color(200, 60, 60)
+            : turn.equals("white")
+                ? new Color(200, 200, 200)
+                : new Color(50, 50, 50));
+        turnLabel.setForeground(inCheck ? Color.WHITE
+            : turn.equals("white") ? Color.BLACK : Color.WHITE);
         modeLabel.setBackground(turnLabel.getBackground());
+        modeLabel.setForeground(turnLabel.getForeground());
     }
 
     /**
