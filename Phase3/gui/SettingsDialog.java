@@ -159,3 +159,4 @@ public class SettingsDialog extends JDialog {
         return btn;
     }
 }
+
